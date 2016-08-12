@@ -2,6 +2,10 @@
 
 package jogo;
 
+import java.util.HashSet;
+
+import enumarations.Jogabilidade;
+
 public abstract class Jogo {
 
 	/*
@@ -12,6 +16,7 @@ public abstract class Jogo {
 	private String nome;
 	private double preco;
 	private int high_score, qtd_jogadas, qtd_zeradas;
+	private HashSet<Jogabilidade> jogabilidade;
 
 	public Jogo(String nome, double preco) {
 
@@ -23,12 +28,16 @@ public abstract class Jogo {
 		this.high_score = 0;
 		this.qtd_jogadas = 0;
 		this.qtd_zeradas = 0;
+		
+		
+		jogabilidade = new HashSet<Jogabilidade>();
 
 		/* cria hashset de classificação de jogo */
 	}
-
-
+	
+	
 	public void atualizaMaiorScore(int novoHighScore) {
+		/* tratamento de exceções*/
 		if (novoHighScore > high_score) {
 			this.high_score = novoHighScore;
 		}
@@ -39,11 +48,21 @@ public abstract class Jogo {
 	}
 
 	public void zeraJogo(boolean zera) {
+		/*tratemento excecao*/
 		if (zera == true) {
 			qtd_zeradas += 1;
 		}
 
 	}
+	
+	public void adicionaJogabilidade(Jogabilidade novaJogabilidade){
+		//* faz tratamento de exceções
+		jogabilidade.add(novaJogabilidade);
+		
+	}
+	
+	
+	
 	/* Getter e setters */
 
 	public String getNome() {
