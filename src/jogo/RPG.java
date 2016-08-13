@@ -14,8 +14,7 @@ public class RPG extends Jogo {
 		super.atualizaMaiorScore(score);
 		super.zeraJogo(zeraJogo);
 		
-		
-		
+	
 	}
 
 	
