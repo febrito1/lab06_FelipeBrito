@@ -4,6 +4,8 @@ import enumarations.usuarioTipo;
 import jogo.*;
 
 public class Noob extends Usuario{
+	
+	private double qtdx2pInicial = 0;
 
 	public Noob(String nome, String login){
 		super(nome, login);
@@ -18,6 +20,12 @@ public class Noob extends Usuario{
 		if(super.verificaListaJogo(jogo)){
 			return false;
 		}
+		
+		/*atualizacao x2p*/
+		
+		
+		
+		
 		/*O preco com o desconto de 10%*/
 		double precoDesconto = jogo.getPreco() - jogo.getPreco() * usuarioTipo.Noob.getDesconto();
 		/* verifica se o valor da carteira é suficiente pra comrpar o jogo*/

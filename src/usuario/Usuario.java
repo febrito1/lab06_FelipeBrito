@@ -2,6 +2,7 @@ package usuario;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import jogo.*;
 
 import jogo.Jogo;
 
@@ -9,6 +10,7 @@ public abstract class Usuario {
 	
 	private String nome, login;
 	private double carteira = 0;
+	private int x2p;
 	private HashSet<Jogo> listaJogos;
 	
 	
@@ -19,12 +21,14 @@ public abstract class Usuario {
 		this.nome = nome;
 		this.login = login;
 		listaJogos = new HashSet<Jogo>();
+		this.x2p = 0;
 		
 	}
 	
 	
-	public void adicionaJogo(Jogo jogo){
+	public boolean adicionaJogo(Jogo jogo){
 		listaJogos.add(jogo);
+		return true;
 	}
 	
 	public boolean adicionaDinheiro(double dinheiro){
@@ -60,6 +64,23 @@ public abstract class Usuario {
 		setCarteira(novoValor);
 	}
 	
+	
+	public void calculax2pCompra(double precoJogo, int x2pTipo){
+		
+		this.x2p += (int) precoJogo * x2pTipo;
+		
+	}
+	
+	public int registraJogada(String nomeJogo, int score, boolean zerou){
+		Jogo jogo = this.getJogo(nomeJogo);
+		
+		int x2p = jogo.registraJogada(score, zerou);
+		
+		this.x2p += x2p;
+		
+		return x2p;
+
+	}
 	
 	public String getNome() {
 		return nome;
@@ -100,7 +121,27 @@ public abstract class Usuario {
 		this.listaJogos = listaJogos;
 	}
 
-	
+	public Jogo getJogo(String nome){
+		
+		Jogo procuraJogo = null;
+		
+		for (Jogo jogo : listaJogos) {
+			if(jogo.getNome().equalsIgnoreCase(nome)){
+				procuraJogo = jogo;
+			}
+		
+		} return procuraJogo;
+		
+		
+	}
+
+
+	@Override
+	public String toString() {
+		return "Usuario [nome=" + nome + ", login=" + login + ", carteira=" + carteira + ", x2p=" + x2p
+				+ ", listaJogos=" + listaJogos + "]";
+	}
+
 	
 	
 	

@@ -7,13 +7,22 @@ public class Luta extends Jogo {
 		super(nome,preco);
 	}
 	
-	public void registraJogada(int score, boolean zeraJogo){
+	public int registraJogada(int score, boolean zeraJogo){
+		
+		int novoxp = 0;
+		
 		// trata excecoes
 		super.adicionaJogada();
-		super.atualizaMaiorScore(score);
+		
+		if(super.atualizaMaiorScore(score)){
+			int novox2p = score/1000;
+		}
 		super.zeraJogo(zeraJogo);
 		
-	}
+		return novoxp;
+	}	
+	
+	
 	
 	
 	

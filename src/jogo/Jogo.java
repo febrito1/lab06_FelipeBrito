@@ -36,23 +36,24 @@ public abstract class Jogo {
 	}
 	
 	
-	public void atualizaMaiorScore(int novoHighScore) {
+	public boolean atualizaMaiorScore(int novoHighScore) {
 		/* tratamento de exceções*/
 		if (novoHighScore > high_score) {
 			this.high_score = novoHighScore;
-		}
+			return true;
+		} return false;
 	}
 
 	public void adicionaJogada() {
 		qtd_jogadas++;
 	}
 
-	public void zeraJogo(boolean zera) {
+	public boolean zeraJogo(boolean zera) {
 		/*tratemento excecao*/
 		if (zera == true) {
 			qtd_zeradas += 1;
-		}
-
+			return true;
+		} return false;
 	}
 	
 	public void adicionaJogabilidade(Jogabilidade novaJogabilidade){
@@ -62,7 +63,9 @@ public abstract class Jogo {
 	}
 	
 	
+	public abstract int registraJogada(int pontuacaoJogada, boolean zerou);
 	
+
 	
 	
 	/* Getter e setters */

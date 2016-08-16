@@ -8,13 +8,13 @@ public class RPG extends Jogo {
 		
 	}
 
-	public void registraJogada(int score, boolean zeraJogo){
+	public int registraJogada(int score, boolean zeraJogo){
 		// trata excecoes
 		super.adicionaJogada();
-		super.atualizaMaiorScore(score);
+		super.atualizaMaiorScore(score); /*score max de 100.000*/
 		super.zeraJogo(zeraJogo);
-		
-	
+		int x2p = 10;
+		return x2p;
 	}
 
 	
