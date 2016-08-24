@@ -1,15 +1,19 @@
+/*Felipe Ricardo de Brito Ramos - 115210767 - TURMA: 1 */
 package jogo;
+
+import exceptions.*;
+
 
 
 public class Plataforma extends Jogo {
 
 	
-	public Plataforma(String nome, int preco){	
+	public Plataforma(String nome, double preco) throws Exception{	
 		super(nome,preco);
 	}
 	
-	public int registraJogada(int score, boolean zeraJogo){
-		// trata excecoes
+	public int registraJogada(int score, boolean zeraJogo) throws NumberException{
+		Excecoes.ScoreInvalido(score);
 		
 		int novox2p = 0;
 		super.adicionaJogada();
@@ -20,4 +24,11 @@ public class Plataforma extends Jogo {
 		}
 		return novox2p;
 	}
+	
+	
+	public String toString(){
+		
+		return "\n+" + super.getNome() + "- PLATOFORMA:\n" + super.toString();	
+	}
+	
 }

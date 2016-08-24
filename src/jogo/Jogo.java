@@ -5,6 +5,8 @@ package jogo;
 import java.util.HashSet;
 
 import enumarations.Jogabilidade;
+import exceptions.*;
+/*import exceptions.Exception;*/
 
 public abstract class Jogo {
 
@@ -18,9 +20,10 @@ public abstract class Jogo {
 	private int high_score, qtd_jogadas, qtd_zeradas;
 	private HashSet<Jogabilidade> jogabilidade;
 
-	public Jogo(String nome, double preco) {
+	public Jogo(String nome, double preco) throws Exception {
 
-		/* trata exceções de nome e de preço */
+		Excecoes.exceptionString(nome);
+		Excecoes.precoInvalido(preco);
 
 		this.nome = nome;
 		this.preco = preco;
@@ -36,8 +39,8 @@ public abstract class Jogo {
 	}
 	
 	
-	public boolean atualizaMaiorScore(int novoHighScore) {
-		/* tratamento de exceções*/
+	public boolean atualizaMaiorScore(int novoHighScore){
+		
 		if (novoHighScore > high_score) {
 			this.high_score = novoHighScore;
 			return true;
@@ -56,17 +59,14 @@ public abstract class Jogo {
 		} return false;
 	}
 	
-	public void adicionaJogabilidade(Jogabilidade novaJogabilidade){
-		//* faz tratamento de exceções
+	public void adicionaJogabilidade(Jogabilidade novaJogabilidade) throws ObjetoException{
+		
 		jogabilidade.add(novaJogabilidade);
 		
 	}
 	
 	
-	public abstract int registraJogada(int pontuacaoJogada, boolean zerou);
-	
-
-	
+	public abstract int registraJogada(int pontuacaoJogada, boolean zerou) throws NumberException;
 	
 	/* Getter e setters */
 
@@ -77,6 +77,8 @@ public abstract class Jogo {
 	public double getPreco() {
 		return preco;
 	}
+
+
 
 	public int getHigh_score() {
 		return high_score;
@@ -90,14 +92,69 @@ public abstract class Jogo {
 		return qtd_zeradas;
 	}
 
-	public void setNome(String nome) {
+	public void setNome(String nome) throws StringException {
+		Excecoes.exceptionString(nome);
 		this.nome = nome;
 	}
 
-	public void setPreco(double preco) {
+	public void setPreco(double preco)throws Exception {
 		this.preco = preco;
 	}
 
+	@Override
+	public String toString(){
+		return "==> Jogou " + getQtd_jogadas() + " vez(es)\n"
+				+ "==> Zerou " + getQtd_zeradas() + " vez(es)\n"
+				+ "==> Maior Score: " + getHigh_score();  
+	}
+
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + high_score;
+		result = prime * result + ((jogabilidade == null) ? 0 : jogabilidade.hashCode());
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(preco);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + qtd_jogadas;
+		result = prime * result + qtd_zeradas;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Jogo other = (Jogo) obj;
+		if (high_score != other.high_score)
+			return false;
+		if (jogabilidade == null) {
+			if (other.jogabilidade != null)
+				return false;
+		} else if (!jogabilidade.equals(other.jogabilidade))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (Double.doubleToLongBits(preco) != Double.doubleToLongBits(other.preco))
+			return false;
+		if (qtd_jogadas != other.qtd_jogadas)
+			return false;
+		if (qtd_zeradas != other.qtd_zeradas)
+			return false;
+		return true;
+	}
+	
 
 	
 	

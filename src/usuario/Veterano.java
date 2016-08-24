@@ -1,43 +1,49 @@
+/*Felipe Ricardo de Brito Ramos - 115210767 - TURMA: 1 */
 package usuario;
 
-import enumarations.usuarioTipo;
+
 import jogo.Jogo;
 
 public class Veterano extends Usuario{
 	
-	private double qtdx2Incial;
-	
-	public Veterano(String nome, String login){
+	public Veterano(String nome, String login) throws Exception{
 		super(nome, login);
 		
 	}
 	
 	
-	public boolean compraJogo(Jogo jogo){	
-		/* trata exceções
-		 * numero inválido
-		 * nome inválido */
-		/*verifica se o jogo existe na lista de jogos*/
-	
+	public void compraJogo(Jogo jogo) throws Exception{	
+			 
 		if(super.verificaListaJogo(jogo)){
-			return false;
+			new Exception("Você já possui o jogo na sua lista.");
 		}
-		/*atualiza x2p*/
-		
-		super.calculax2pCompra(jogo.getPreco(), usuarioTipo.Veterano.getX2pPreco());
-		
-		/*O preco com o desconto de 10%*/
-		
-		double precoDesconto = jogo.getPreco() - jogo.getPreco() * usuarioTipo.Veterano.getDesconto();
-		
-		/* verifica se o valor da carteira é suficiente pra comrpar o jogo*/
+		double precoDesconto = jogo.getPreco() - jogo.getPreco() * 0.20;
 		if(super.verificaDinheiro(precoDesconto)){
-			return false;
+			new Exception("Você não possui dinheiro suficiente para efetuar a compra.");
 		}
-	
-		/*atualiza o valor da carteira depois de descontado o preco com desconto*/
-		super.atualizaCarteira(precoDesconto);
-		return true;
+		
+		somavalorJogo(jogo.getPreco());
+		super.x2pCompra(calculax2pCompra(jogo.getPreco()));
+		super.adicionaJogo(jogo);
+		
 	}
 
+	
+	public int calculax2pCompra(double precoJogo){
+	
+		int x2p = (int) (precoJogo * 15);	
+		return x2p;
+	}
+
+
+	@Override
+	public String toString() {
+		return super.getLogin() + "/n" 
+	           + super.getNome() + "- Jogador Veterano \n"
+	           + "Lista de Jogos: /n"
+	           + super.toString();
+		
+	}
+	
+	
 }

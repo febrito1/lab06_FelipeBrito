@@ -1,41 +1,47 @@
+/*Felipe Ricardo de Brito Ramos - 115210767 - TURMA: 1 */
 package usuario;
 
-import enumarations.usuarioTipo;
-import jogo.*;
+
+import exceptions.*;
+import jogo.Jogo;
 
 public class Noob extends Usuario{
 	
-	private double qtdx2pInicial = 0;
 
-	public Noob(String nome, String login){
+	public Noob(String nome, String login) throws Exception{
 		super(nome, login);
 	}
 	
 	
-	public boolean compraJogo(Jogo jogo){	
-		/* trata exceções
-		 * numero inválido
-		 * nome inválido */
-		/*verifica se o jogo existe na lista de jogos*/
+	public void compraJogo(Jogo jogo) throws Exception{	
+		
 		if(super.verificaListaJogo(jogo)){
-			return false;
+			new Exception("Jogo já existe na sua lista de jogos");
 		}
 		
-		/*atualizacao x2p*/
-		
-		
-		
-		
-		/*O preco com o desconto de 10%*/
-		double precoDesconto = jogo.getPreco() - jogo.getPreco() * usuarioTipo.Noob.getDesconto();
-		/* verifica se o valor da carteira é suficiente pra comrpar o jogo*/
+		double precoDesconto = jogo.getPreco() - jogo.getPreco() * 0.10;
 		if(super.verificaDinheiro(precoDesconto)){
-			return false;
+			new Exception("Você não possui dinheiro suficiente.");
 		}
-		/*atualiza o valor da carteira depois de descontado o preco com desconto*/
-		super.atualizaCarteira(precoDesconto);
-		return true;
+		
+		somavalorJogo(jogo.getPreco());
+		super.x2pCompra(calculax2pCompra(jogo.getPreco()));
+		super.adicionaJogo(jogo);
 	}
 	
+	public int calculax2pCompra(double precoJogo){
+		int x2p = (int) (precoJogo * 10);	
+		return x2p;
+	}
+
+
+	@Override
+	public String toString() {
+		return super.getLogin() + "\n" 
+	           + super.getNome() + "- Jogador Noob \n"
+	           + "Lista de Jogos: \n"
+	           + super.toString();
+		
+	}
 	
 }
